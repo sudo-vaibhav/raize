@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
+
+body {
+  @apply font-body;
+}
+
+h1,
+h2,
+h6 {
+  @apply font-display;
+}
+
+.btn-primary-900 {
+  @apply bg-primary-900 py-3 px-10 text-dark-900;
+}
+
+.btn-primary-900.light {
+  @apply text-light-100 !important;
+}
+
+/* html,
+body {
+  overflow: hidden;
+} */
