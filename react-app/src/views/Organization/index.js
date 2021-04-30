@@ -5,6 +5,7 @@ import Sidebar from './Sidebar'
 import Donate from './Donate'
 import OrganizationLogin from './OrganizationLogin'
 import OrganizationSignup from './OrganizationSignup'
+import OrganizationSettings from './OrganizationSettings'
 
 const Organization = () => {
   const { path } = useRouteMatch()
@@ -22,6 +23,10 @@ const Organization = () => {
           <main className="col-start-2 col-end-19">
             <Switch>
               <Route path="/organization/dashboard" component={Dashboard} />
+              <Route
+                path="/organization/settings"
+                component={OrganizationSettings}
+              />
               <Route path="/organization/donate" component={Donate} />
               <Route path="/organization" exact component={OrganizationHome} />
             </Switch>

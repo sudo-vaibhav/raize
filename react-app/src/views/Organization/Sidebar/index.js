@@ -14,10 +14,10 @@ const Sidebar = () => {
           iconName: 'home',
           link: '',
         },
-        {
-          iconName: 'mail',
-          link: 'feed',
-        },
+        // {
+        //   iconName: 'mail',
+        //   link: 'feed',
+        // },
         {
           iconName: 'bar-chart-2',
           link: 'dashboard',
