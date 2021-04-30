@@ -19,8 +19,11 @@ const Influencer = () => {
         <Route path={`${path}/signup`} exact>
           <InfluencerSignup />
         </Route>
-        <Route path={`${path}/`}>
+        <Route>
           <Switch>
+            <Route path={`${path}/stats/:campaignId?`}>
+              <Stats />
+            </Route>
             <Route path={`${path}/profile`}>
               <ProfileView />
             </Route>
@@ -32,9 +35,6 @@ const Influencer = () => {
             </Route>
             <Route path={`${path}/start-campaign/:ngoId`}>
               <StartCampaign />
-            </Route>
-            <Route path={`${path}/stats`}>
-              <Stats />
             </Route>
           </Switch>
           <BottomNavigator />

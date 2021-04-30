@@ -9,6 +9,7 @@ import OrganizationSettings from './OrganizationSettings'
 
 const Organization = () => {
   const { path } = useRouteMatch()
+
   return (
     <Switch>
       <Route path={`${path}/login`} exact>
@@ -17,6 +18,7 @@ const Organization = () => {
       <Route path={`${path}/signup`} exact>
         <OrganizationSignup />
       </Route>
+      <Route path={`${path}/donate/:donationCode`} component={Donate} />
       <Route path={`${path}/`}>
         <div className="grid grid-cols-18">
           <Sidebar />
@@ -27,7 +29,6 @@ const Organization = () => {
                 path="/organization/settings"
                 component={OrganizationSettings}
               />
-              <Route path="/organization/donate" component={Donate} />
               <Route path="/organization" exact component={OrganizationHome} />
             </Switch>
           </main>

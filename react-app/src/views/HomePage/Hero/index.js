@@ -16,7 +16,7 @@ const Hero = () => {
           {[
             {
               name: 'Influencer',
-              link: 'influencer',
+              link: 'influencer/profile',
             },
             {
               name: 'Organization',

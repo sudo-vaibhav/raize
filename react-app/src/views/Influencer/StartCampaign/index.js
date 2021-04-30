@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react'
 import { Form, Formik } from 'formik'
 import FormField from '../../../components/FormField'
-import { useParams } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import { db } from '../../../firebase'
+import getUniqueId from '../../../helpers/getUniqueId'
+import { useAuth } from '../../../contexts/AuthContext'
 
 const StartCampaign = () => {
+  const { currentUser } = useAuth()
   const { ngoId } = useParams()
+  const history = useHistory()
   const [ngoData, setNgoData] = useState({
     organizationName: '',
   })
@@ -15,7 +19,7 @@ const StartCampaign = () => {
       .get()
       .then((doc) => {
         if (doc.exists) {
-          setNgoData(doc.data())
+          setNgoData({ id: doc.id, ...doc.data() })
         } else {
           console.log('doc doesnt exist')
         }
@@ -35,9 +39,18 @@ const StartCampaign = () => {
           initialValues={{
             name: 'Drinking Water for children',
             description: 'Homeless kids in Rajasthan need your help',
-            ngoId: 'asiujfbasioufbasihoafhis',
             target: 500000,
             bannerUrl: 'https://i.ibb.co/YkCgJNj/water.png',
+          }}
+          onSubmit={async (values) => {
+            const newCampaign = await db.collection('campaign').add({
+              ...values,
+              orgUId: ngoData.id,
+              campaignId: getUniqueId(),
+              influencerId: currentUser.uid,
+              createdAt: Date.now(),
+            })
+            history.push(`/influencer/stats/${newCampaign.id}`)
           }}
         >
           {({ isSubmitting, values }) => {

@@ -32,7 +32,7 @@ const OrganizationLogin = () => {
               <Card className="m-5">
                 <Form className="flex flex-col px-5">
                   <h2 className="font-bold text-2xl pb-2 pt-5">
-                    Organisation Login
+                    Organization Login
                   </h2>
                   <FormField
                     fieldName={'email'}

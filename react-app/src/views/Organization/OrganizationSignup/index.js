@@ -51,7 +51,7 @@ const OrganizationSignup = () => {
                 organizationLogo: 'https://i.ibb.co/c2fJbz1/Ellipse-231.png',
                 orgId: getUniqueId(),
                 description:
-                  'Hemkunt Foundation is a non-government organisation that aims to provide humanitarian aid to marginalized sections of society.',
+                  'Hemkunt Foundation is a non-government organization that aims to provide humanitarian aid to marginalized sections of society.',
               }}
               onSubmit={async (values, { setSubmitting }) => {
                 setSubmitting(true)

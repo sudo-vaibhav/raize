@@ -1,134 +1,177 @@
+import { useState } from 'react'
 import Card from '../../../components/Card'
 import { platformColorMap } from '../../../constants'
 import FeatherIcon from 'feather-icons-react'
+import { Link } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import { db } from '../../../firebase'
+import { useAuth } from '../../../contexts/AuthContext'
+
+import { useEffect } from 'react'
+import { useParams, Redirect, useHistory } from 'react-router'
+import SocialCard from './SocialCard'
+import getSocialsData from './getSocialsData'
 
 const Stats = () => {
-  const donations = [
-    {
-      platform: 'youtube',
-      amount: 120000,
-    },
-    {
-      platform: 'twitter',
-      amount: 223000,
-    },
-    {
-      platform: 'instagram',
-      amount: 140000,
-    },
-  ].sort((a, b) => {
-    if (a.amount > b.amount) return -1
-    else if (a.amount < b.amount) return 1
-    return 0
+  let { campaignId } = useParams()
+  console.log('campaign id:', campaignId)
+  const history = useHistory()
+  const [selectedDropDown, setSelectedDropDown] = useState('select campaign')
+
+  let [
+    { campaignsData, selectedCampaign, donations, selectedCampaignData },
+    setData,
+  ] = useState({
+    campaignsData: null,
+    selectedCampaign: campaignId,
+    donations: [],
   })
+  const { currentUser } = useAuth()
 
-  // to account for raising money more than set goal
-  const actualRaised = donations.reduce(
-    (a, b) => ({ amount: a.amount + b.amount }),
-    {
-      amount: 0,
-    },
-  ).amount
+  // const selectedCampaign = campaignId || (campaignsData && campaignsData[0].id)
+  // let selectedCampaign = campaignId
 
-  const target = 700000
-  const baseLine = Math.max(target, actualRaised)
+  useEffect(() => {
+    console.log(currentUser.uid)
+    db.collection('campaign')
+      .where('influencerId', '==', currentUser.uid)
+      .orderBy('createdAt', 'desc')
+      .get()
+      .then((querySnapshot) => {
+        const docs = []
+        querySnapshot.forEach((doc) => {
+          docs.push({ id: doc.id, ...doc.data() })
+        })
+        console.log(docs)
+        // if(docs.length===0)
+        let selectedCampaign = campaignId || (docs.length && docs[0].id)
+
+        db.collection('donation')
+          .where('campaignId', '==', selectedCampaign)
+          .get()
+          .then((querySnapshot) => {
+            let donationsDocs = []
+            querySnapshot.forEach((doc) => {
+              donationsDocs.push({ id: doc.id, ...doc.data() })
+            })
+
+            console.log('donations', donationsDocs)
+
+            setData({
+              campaignsData: docs,
+              selectedCampaign,
+              selectedCampaignData: docs.find((e) => {
+                return e.id === selectedCampaign
+              }),
+              donations: donationsDocs,
+            })
+          })
+      })
+  }, [campaignId])
+
+  const { total, platformWise, baseLine } = getSocialsData(
+    campaignsData,
+    selectedCampaign,
+    donations,
+  )
+
   return (
     <div className="px-5 container mx-auto">
-      <div className="flex items-center">
-        <h2 className="font-bold text-2xl pb-2 pt-5 w-1/2 px-2">
-          Hello, Prajakta
-        </h2>
-        <div className="flex-grow px-2 w-1/2">
+      <div className="w-3/4">
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss={false}
+          draggable
+          pauseOnHover
+        />
+      </div>
+      {campaignsData && campaignsData.length !== 0 ? (
+        <>
           <div className="flex items-center">
-            <select className="w-full p-2 rounded-full">
-              {[
-                'Food for street dogs',
-                'Help for Clean drinking water for homeless kids',
-              ].map((e) => {
-                return (
-                  <option key={e} value={e}>
-                    {e}
-                  </option>
-                )
-              })}
-            </select>
-            <div>
-              <FeatherIcon
-                icon="plus-circle"
-                className="ml-3 text-primary-900"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-      <Card>
-        <h3 className="text-xl font-bold">
-          ₹{actualRaised}
-          <span className="text-sm text-light-900">&nbsp;generated</span>
-        </h3>
-        <div
-          style={{ height: 16 }}
-          className="bg-light-500 flex rounded-lg my-3 rounded-lg"
-        >
-          {donations.map((e, idx) => {
-            return (
-              <div
-                key={e.platform}
-                style={{
-                  width: `${(100 * e.amount) / baseLine}%`,
-                  backgroundColor: platformColorMap[e.platform],
-                }}
-                className={
-                  idx === 0
-                    ? 'rounded-l-lg'
-                    : idx === donations.length - 1
-                    ? 'rounded-r-lg'
-                    : ''
-                }
-              ></div>
-            )
-          })}
-        </div>
-      </Card>
-      <div className="flex justify-between my-5">
-        <h4 className="text-lg font-semibold">Know your socials</h4>
-        <FeatherIcon icon="plus-circle" stroke="var(--color-primary-900)" />
-      </div>
-      {/* <p className="text-sm font-medium mb-5">
-        double tap to copy your unique platform url
-      </p> */}
-      {donations.map((e) => {
-        return (
-          <Card className="flex justify-between items-center my-3">
-            <div className="flex items-center">
-              <FeatherIcon
-                icon={e.platform}
-                stroke={platformColorMap[e.platform]}
-              />
-              <div className="ml-4">
-                <h4 className="font-semibold">₹{e.amount}</h4>
-                <div className="flex mt-2">
+            <h2 className="font-bold text-lg pb-2 pt-5 w-1/2 px-2">
+              {selectedCampaignData.name}
+            </h2>
+            <div className="flex-grow px-2 w-1/2">
+              <div className="flex items-center">
+                <select
+                  className="w-full p-2 rounded-full"
+                  value={selectedCampaignData.id}
+                  onChange={(e) => {
+                    campaignId = e.target.value
+                    history.push(`/influencer/stats/${e.target.value}`)
+                  }}
+                >
+                  {campaignsData.map((e) => {
+                    return (
+                      <>
+                        <option key={e.id} value={e.id}>
+                          {e.name}
+                        </option>
+                      </>
+                    )
+                  })}
+                </select>
+                <Link to="/influencer/explore-ngos">
                   <FeatherIcon
-                    icon="trending-up"
-                    stroke={'var(--color-primary-900)'}
-                    size={14}
+                    icon="plus-circle"
+                    className="ml-3 text-primary-900"
                   />
-                  <span className="text-xs ml-2 font-medium text-light-900">
-                    Up <span className="font-bold text-primary-900">15%</span>{' '}
-                    since yesterday
-                  </span>
-                </div>
+                </Link>
               </div>
             </div>
-            <div>
-              <FeatherIcon
-                icon="chevron-right"
-                stroke="var(--color-primary-900)"
-              />
+          </div>
+          <Card>
+            <h3 className="text-xl font-bold">
+              ₹{baseLine}
+              <span className="text-sm text-light-900">&nbsp;generated</span>
+            </h3>
+            <div
+              style={{ height: 16 }}
+              className="bg-light-500 flex rounded-lg my-3 rounded-lg"
+            >
+              {Object.keys(platformWise).map((e, idx) => {
+                return (
+                  <div
+                    key={idx}
+                    style={{
+                      width: `${(100 * platformWise[e]) / baseLine}%`,
+                      backgroundColor: platformColorMap[e],
+                    }}
+                    className={
+                      idx === 0
+                        ? 'rounded-l-lg'
+                        : idx === 2
+                        ? 'rounded-r-lg'
+                        : ''
+                    }
+                  ></div>
+                )
+              })}
             </div>
           </Card>
-        )
-      })}
+          <div className="flex justify-between my-5">
+            <h4 className="text-lg font-semibold">Know your socials</h4>
+          </div>
+          {Object.keys(platformWise).map((e, idx) => {
+            return (
+              <SocialCard
+                key={idx}
+                name={e}
+                amount={platformWise[e]}
+                selectedCampaignData={selectedCampaignData}
+              />
+            )
+          })}
+        </>
+      ) : campaignsData === null ? null : (
+        <Redirect to={'/influencer/explore-ngos'} />
+      )}
     </div>
   )
 }
