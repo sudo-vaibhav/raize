@@ -34,7 +34,33 @@ const Stats = () => {
   const baseLine = Math.max(target, actualRaised)
   return (
     <div className="px-5 container mx-auto">
-      <h2 className="font-bold text-2xl pb-2 pt-5">Hello, Prajakta</h2>
+      <div className="flex items-center">
+        <h2 className="font-bold text-2xl pb-2 pt-5 w-1/2 px-2">
+          Hello, Prajakta
+        </h2>
+        <div className="flex-grow px-2 w-1/2">
+          <div className="flex items-center">
+            <select className="w-full p-2 rounded-full">
+              {[
+                'Food for street dogs',
+                'Help for Clean drinking water for homeless kids',
+              ].map((e) => {
+                return (
+                  <option key={e} value={e}>
+                    {e}
+                  </option>
+                )
+              })}
+            </select>
+            <div>
+              <FeatherIcon
+                icon="plus-circle"
+                className="ml-3 text-primary-900"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
       <Card>
         <h3 className="text-xl font-bold">
           ₹{actualRaised}

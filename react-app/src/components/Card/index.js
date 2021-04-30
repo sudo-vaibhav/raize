@@ -1,6 +1,7 @@
-const Card = ({ children, className, style }) => {
+const Card = ({ children, className, style, onClick }) => {
   return (
     <div
+      onClick={onClick}
       className={
         'bg-light-100 p-5 rounded-lg border-light-700 border-1 ' + className
       }

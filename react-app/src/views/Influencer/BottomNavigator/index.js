@@ -12,7 +12,7 @@ const BottomNavigator = () => {
         {
           icon: 'compass',
           name: 'New Campaign',
-          link: 'new-campaign',
+          link: 'explore-ngos',
         },
         {
           icon: 'bell',
@@ -27,6 +27,7 @@ const BottomNavigator = () => {
       ].map((e) => {
         return (
           <NavLink
+            key={e.icon}
             to={`/influencer/${e.link}`}
             className="p-3 flex flex-col items-center"
             activeClassName="text-primary-900"

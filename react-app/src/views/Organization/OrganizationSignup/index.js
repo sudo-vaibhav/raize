@@ -5,9 +5,18 @@ import FormField from '../../../components/FormField'
 import { Link } from 'react-router-dom'
 import { Player } from '@lottiefiles/react-lottie-player'
 import tick from '../../../lotte/tick.json'
+import { db } from '../../../firebase'
+import { useAuth } from '../../../contexts/AuthContext'
+import getUniqueId from '../../../helpers/getUniqueId'
 
 const OrganizationSignup = () => {
   const [step, setStep] = useState(1)
+  const { signup } = useAuth()
+  const handleClick = () => {
+    if (step === 2) {
+    }
+    setStep(step + 1)
+  }
 
   return (
     <div className="bg-light-500" style={{ minHeight: 'calc(100vh - 73px)' }}>
@@ -36,10 +45,33 @@ const OrganizationSignup = () => {
                 organizationName: 'Hemkunt Foundation',
                 organizationType: 'healthcare',
                 phoneNumber: '9319740960',
+                password: '123456',
                 email: 'contact@hemkuntfoundation.com',
+                website: 'hemkuntfoundation.com',
+                organizationLogo: 'https://i.ibb.co/c2fJbz1/Ellipse-231.png',
+                orgId: getUniqueId(),
+                description:
+                  'Hemkunt Foundation is a non-government organisation that aims to provide humanitarian aid to marginalized sections of society.',
+              }}
+              onSubmit={async (values, { setSubmitting }) => {
+                setSubmitting(true)
+                console.log(signup)
+                try {
+                  const ref = await signup(values.email, values.password, 'ngo')
+                  await db
+                    .collection('ngo')
+                    .add({ ...values, orgUId: ref.user.uid })
+                } catch (err) {
+                  alert('some error occured')
+                  console.log(err)
+                }
+                setSubmitting(false)
+                handleClick()
+                // console.log(values)
+                // console.log('submitting bro')
               }}
             >
-              {({ isSubmitting }) => (
+              {({ isSubmitting, values, handleSubmit }) => (
                 <Form className="flex flex-col px-5 ">
                   {step === 3 ? (
                     <div className="text-center pb-16">
@@ -83,17 +115,36 @@ const OrganizationSignup = () => {
                       <FormField fieldName="phoneNumber" />
                     </div>
                   ) : (
-                    <div>step 2</div>
+                    <div className="grid gap-8 w-5/6 mt-10 mx-auto grid-cols-2 mb-16">
+                      <FormField fieldName="description" />
+                      <FormField fieldName="website" />
+                      <FormField fieldName="organizationLogo" />
+                      <FormField fieldName="password" />
+                      <img src={values.organizationLogo} alt="" />
+                    </div>
                   )}
 
                   {step !== 3 && (
                     <div className="w-5/6 mx-auto flex justify-end mt-10 mb-16">
-                      <button
-                        className="btn-primary-900 light"
-                        onClick={() => setStep(step + 1)}
-                      >
-                        {step === 1 ? 'Continue' : 'Finish'}
-                      </button>
+                      {step === 1 ? (
+                        <Link
+                          className="btn-primary-900 light"
+                          onClick={handleClick}
+                        >
+                          Continue
+                        </Link>
+                      ) : (
+                        <button
+                          className="btn-primary-900 light"
+                          type="submit"
+                          disabled={isSubmitting}
+                          onClick={() => {
+                            handleSubmit()
+                          }}
+                        >
+                          Finish
+                        </button>
+                      )}
                     </div>
                   )}
                 </Form>

@@ -38,7 +38,7 @@ const GeographicSplit = ({ className }) => {
       <div className="grid gap-x-14 grid-cols-2">
         {data.map((e) => {
           return (
-            <div className="my-4">
+            <div className="my-3">
               <div className="flex justify-between items-center">
                 {/* <div> */}
                 <h6 className="">{e.state}</h6>

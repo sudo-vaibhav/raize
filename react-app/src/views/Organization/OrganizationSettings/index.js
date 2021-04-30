@@ -1,6 +1,9 @@
 import { Formik, Form } from 'formik'
 import FormField from '../../../components/FormField'
+import { useAuth } from '../../../contexts/AuthContext'
+
 const OrganizationSettings = () => {
+  // console.log('x', x)
   return (
     <div className="bg-light-500">
       <div className="mx-auto container">

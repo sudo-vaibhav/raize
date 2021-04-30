@@ -1,7 +1,7 @@
 import os
 import numpy as np
 import pandas as pd
-import tensorflow as tf
+# import tensorflow as tf
 from flask import Flask, request,jsonify
 from flask_cors import CORS
 

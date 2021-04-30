@@ -5,7 +5,8 @@ import InfluencerLogin from './InfluencerLogin'
 import InfluencerSignup from './InfluencerSignup'
 import Stats from './Stats'
 import Notifications from './Notifications'
-import NewCampaign from './NewCampaign'
+import ExploreNGOs from './ExploreNGOs'
+import StartCampaign from './StartCampaign'
 
 const Influencer = () => {
   const { path } = useRouteMatch()
@@ -26,8 +27,11 @@ const Influencer = () => {
             <Route path={`${path}/notifications`}>
               <Notifications />
             </Route>
-            <Route path={`${path}/new-campaign`}>
-              <NewCampaign />
+            <Route path={`${path}/explore-ngos`}>
+              <ExploreNGOs />
+            </Route>
+            <Route path={`${path}/start-campaign/:ngoId`}>
+              <StartCampaign />
             </Route>
             <Route path={`${path}/stats`}>
               <Stats />

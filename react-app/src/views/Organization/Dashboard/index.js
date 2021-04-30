@@ -4,7 +4,7 @@ import LiveAnalytics from './Analytics'
 import GiftNFTs from './GiftNFTs'
 
 const Dashboard = () => {
-  const { url, path } = useRouteMatch()
+  const { path } = useRouteMatch()
   return (
     <>
       <div className="container mx-auto">

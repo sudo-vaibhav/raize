@@ -1,4 +1,4 @@
-import Card from '../../../../components/Card'
+// import Card from '../../../../components/Card'
 import TopDonations from '../../../../components/Organization/TopDonations'
 import ExpenditureSplit from './ExpenditureSplit'
 import GeographicSplit from './GeographicSplit'
