@@ -1,51 +1,47 @@
 import Card from '../../../../../components/Card'
+import axios from '../../../../../helpers/axiosForAPI'
+import { useState, useEffect } from 'react'
+import approx from 'approximate-number'
 
 const GeographicSplit = ({ className }) => {
-  const income = 8000000
-  const data = [
-    {
-      ratio: 0.34,
-      state: 'Maharasthra',
-    },
-    {
-      ratio: 0.25,
-      state: 'Punjab',
-    },
-    {
-      ratio: 0.17,
-      state: 'Delhi',
-    },
-    {
-      ratio: 0.1,
-      state: 'Kerala',
-    },
-    {
-      ratio: 0.06,
-      state: 'West Bengal',
-    },
-    {
-      ratio: 0.08,
-      state: 'Tamil Nadu',
-    },
-  ].sort((a, b) => {
-    if (a.ratio > b.ratio) return -1
-    else if (a.ratio < b.ratio) return 1
-    return 0
+  const [{ income, cases, states }, setData] = useState({
+    income: 8000000,
+    cases: [],
+    states: [],
   })
+  useEffect(() => {
+    ;(async () => {
+      const stateWiseData = await axios.get('/covid_cases_statewise')
+      console.log(stateWiseData)
+
+      setData({
+        income: 8000000,
+        ...stateWiseData,
+      })
+    })()
+  }, [])
+
+  const ratio = []
+  const totalCases = cases.reduce((a, b) => a + b, 0)
+  // cases.sum()
+  cases.forEach((element) => {
+    ratio.push(element / totalCases)
+  })
+
   return (
     <Card className={className}>
       <h5 className="text-lg font-medium">Geographic Insights</h5>
       <div className="grid gap-x-14 grid-cols-2">
-        {data.map((e) => {
+        {cases.map((e, i) => {
           return (
-            <div className="my-3">
+            <div className="my-3" key={i}>
               <div className="flex justify-between items-center">
                 {/* <div> */}
-                <h6 className="">{e.state}</h6>
+                <h6 className="">{states[i]}</h6>
                 <p className="text-xs">
-                  {e.ratio * 100}% |{' '}
+                  {approx(ratio[i] * 100)}% |{' '}
                   <span className="font-bold text-primary-900">
-                    ₹{e.ratio * income}
+                    ₹{approx(ratio[i] * income)}
                   </span>
                 </p>
                 {/* </div> */}
@@ -57,7 +53,7 @@ const GeographicSplit = ({ className }) => {
                 <div
                   className="h-full rounded-lg bg-primary-900"
                   style={{
-                    width: `${e.ratio * 100}%`,
+                    width: `${Math.round(ratio[i] * 100)}%`,
                   }}
                 ></div>
               </div>
