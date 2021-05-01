@@ -1,7 +1,6 @@
 # **Raize**
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f183be02-e01c-40fa-b27d-5b959abb471b/Frame_2034.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f183be02-e01c-40fa-b27d-5b959abb471b/Frame_2034.png)
-
+<img src="./Frame%201990.png" />
 Table of Contents
 
 - About the Product
