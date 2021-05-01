@@ -1,4 +1,5 @@
 import Modal from 'react-modal'
+import logo from './Logo.png'
 import { useEffect, useState } from 'react'
 import { Formik, Form } from 'formik'
 import FeatherIcon from 'feather-icons-react'
@@ -9,20 +10,100 @@ import FormField from '../../../components/FormField'
 import { Link } from 'react-router-dom'
 import { Player } from '@lottiefiles/react-lottie-player'
 import paymentDone from '../../../lotte/payment-done.json'
+import axios from 'axios'
 
-const customStyles = {
-  content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-    backgroundColor: 'var(--color-light-500)',
-  },
+function loadScript(src) {
+  return new Promise((resolve) => {
+    const script = document.createElement('script')
+    script.src = src
+    script.onload = () => {
+      resolve(true)
+    }
+    script.onerror = () => {
+      resolve(false)
+    }
+    document.body.appendChild(script)
+  })
 }
 
 const Donate = () => {
+  async function displayRazorpay(values) {
+    const res = await loadScript('https://checkout.razorpay.com/v1/checkout.js')
+
+    if (!res) {
+      alert('Razorpay SDK failed to load. Are you online?')
+      return
+    }
+
+    // name: 'Vaibhav Chopra',
+    // email: 'mailvaibhavchopra@gmail.com',
+    // phone: '9319740960',
+    // amount: 500,
+
+    // creating a new order
+    const result = await axios.post('http://localhost:8989/orders', {
+      amount: values.amount,
+    })
+
+    if (!result) {
+      alert('Server error. Are you online?')
+      return
+    }
+
+    // Getting the order details back
+    const { amount, id: order_id, currency } = result.data
+
+    const options = {
+      key: 'rzp_test_JxTRhuWo22IDA4', // Enter the Key ID generated from the Dashboard
+      amount: amount.toString(),
+      currency: currency,
+      name: 'Raize Fundraising',
+      description: 'Test Transaction',
+      image: { logo },
+      order_id: order_id,
+      handler: async function (response) {
+        const data = {
+          orderCreationId: order_id,
+          razorpayPaymentId: response.razorpay_payment_id,
+          razorpayOrderId: response.razorpay_order_id,
+          razorpaySignature: response.razorpay_signature,
+        }
+
+        const result = await axios.post('http://localhost:8989/success', data)
+
+        // alert(result.data.msg)
+
+        // setIsOpen(true)
+      },
+      prefill: {
+        name: values.name,
+        email: values.email,
+        contact: values.phone,
+      },
+      // notes: {
+      //   address: 'Soumya Dey Corporate Office',
+      // },
+      theme: {
+        color: '#16AE89',
+      },
+    }
+
+    const paymentObject = new window.Razorpay(options)
+    paymentObject.open()
+  }
+
+  const customStyles = {
+    content: {
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+      backgroundColor: 'var(--color-light-500)',
+    },
+  }
+
   // const history = useHistory()
   const [modalIsOpen, setIsOpen] = useState(false)
   const { donationCode } = useParams()
@@ -97,7 +178,7 @@ const Donate = () => {
             <h3 className="font-semibold text-2xl my-3">{campaignData.name}</h3>
             <p className="my-3">{campaignData.description}</p>
             <p>
-              EIN: 14-1942074
+              {/* EIN: 14-1942074 */}
               <br />
               <a
                 href={organizationData}
@@ -163,6 +244,7 @@ const Donate = () => {
                 amount: 500,
               }}
               onSubmit={async (values) => {
+                await displayRazorpay(values)
                 await db.collection('donation').add({
                   ...values,
                   campaignId: campaignData.id,
