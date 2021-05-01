@@ -43,16 +43,21 @@ const customStyles = {
 }
 
 const GiftNFTs = ({ influencers, donations, campaigns, ngoData }) => {
-  const [donationSuccess, setDonationSuccess] = useState(false)
-  const [modalIsOpen, setIsOpen] = useState(false)
+  // const [donationSuccess, setDonationSuccess] = useState(false)
+  // const [modalIsOpen, setIsOpen] = useState(false)
 
-  function openModal() {
-    setIsOpen(true)
-  }
+  const [{ donationSuccess, selectedNFT }, setState] = useState({
+    donationSuccess: false,
+    selectedNFT: '',
+  })
 
-  function closeModal() {
-    setIsOpen(false)
-  }
+  // function openModal() {
+  //   setIsOpen(true)
+  // }
+
+  // function closeModal() {
+  //   setIsOpen(false)
+  // }
 
   return (
     <div
@@ -84,7 +89,12 @@ const GiftNFTs = ({ influencers, donations, campaigns, ngoData }) => {
                     <span className="font-semibold">2 remaining</span>
                   </div> */}
                   <button
-                    // onClick={setSelectedNFT(i.name)}
+                    onClick={() =>
+                      setState({
+                        selectedNFT: i.name,
+                        donationSuccess,
+                      })
+                    }
                     className="text-secondary-900 bg-secondary-500 flex p-3 w-full justify-center mt-4 rounded-lg"
                   >
                     <FeatherIcon icon="gift" />
@@ -102,12 +112,16 @@ const GiftNFTs = ({ influencers, donations, campaigns, ngoData }) => {
         />
       </div>
       <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
+        isOpen={selectedNFT != ''}
+        onRequestClose={() => {
+          setState({ donationSuccess, selectedNFT: '' })
+        }}
         style={customStyles}
       >
         <div className="flex items-center">
-          <button onClick={closeModal}>
+          <button
+            onClick={() => setState({ donationSuccess, selectedNFT: '' })}
+          >
             <FeatherIcon icon="x" />
           </button>
           <h2 className="ml-3 font-semibold text-2xl">Donate NFT</h2>
@@ -138,9 +152,12 @@ const GiftNFTs = ({ influencers, donations, campaigns, ngoData }) => {
               console.log('on influencer select', data)
               await db.collection('nftrequest').add({
                 influencerUId: data.influencerUId,
-                // nft: selectedNFT,
+                nft: selectedNFT,
               })
-              setDonationSuccess(true)
+              setState({
+                donationSuccess: true,
+                selectedNFT: true,
+              })
             }}
           />
         )}
