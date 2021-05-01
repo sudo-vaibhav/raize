@@ -26,12 +26,10 @@ const Features = () => {
   return (
     <section className="container mx-auto text-center my-10">
       <h2 className="text-light-100 text-3xl">
-        A Digital Sidekick for the Real Superheroes
+        Cybernetically Enhanced Fundraisers
       </h2>
       <p className="lg:w-1/2 mx-auto text-light-900 my-3">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Leo massa
-        curabitur aliquet mattis quis tellus ullamcorper arcu est. Vulputate vel
-        integer elementum eu iaculis fringilla elementum augue.
+        A Digital Sidekick for the Real Superheroes
       </p>
       <div className="grid grid-rows-3 gap-3 grid-cols-1 lg:grid-rows-1 lg:grid-cols-3  lg:w-3/4 mx-auto my-10">
         {featuresData.map((e) => {

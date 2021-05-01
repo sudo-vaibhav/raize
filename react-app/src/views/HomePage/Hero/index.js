@@ -8,9 +8,9 @@ const Hero = () => {
           Donations Done Right&nbsp;✅
         </h1>
         <p className="text-light-900 my-4">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Leo massa
-          curabitur aliquet mattis quis tellus ullamcorper arcu est. Vulputate
-          vel integer elementum eu iaculis fringilla elementum augue.
+          Raize aims to allow small and medium sized NGOs to streamline their
+          processes and establish a better connection with the community using
+          digital analytics and socially-accountable technology.
         </p>
         <div className="flex flex-wrap my-4">
           {[

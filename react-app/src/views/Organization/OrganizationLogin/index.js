@@ -1,5 +1,6 @@
 import { Form, Formik } from 'formik'
 import { Link, useHistory } from 'react-router-dom'
+import image from './organizationHero.svg'
 import FormField from '../../../components/FormField'
 import Card from '../../../components/Card'
 import { useAuth } from '../../../contexts/AuthContext'
@@ -15,13 +16,15 @@ const OrganizationLogin = () => {
         <div className="col-span-2 relative">
           <div className="bg-primary-900 h-full w-1/2 rounded-l-lg"></div>
           <div
-            className="bg-dark-700 absolute w-5/6 h-5/6 rounded-lg"
+            className="bg-dark-700 absolute w-5/6 h-5/6 rounded-lg grid place-items-center"
             style={{
               top: '50%',
               left: '50%',
               transform: 'translate(-50%, -50%)',
             }}
-          ></div>
+          >
+            <img src={image} />
+          </div>
         </div>
 
         <div className="col-start-3 py-16 col-span-1">

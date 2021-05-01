@@ -26,11 +26,14 @@ def sentiment_split():
     }
 
     for headline in headlines:
-        content = headline["content"] + " " + headline["description"] + " " + headline["title"]
-        
-        for key in keywords:
-            for synonym in keywords[key]:
-                counts[key] += len(re.findall(synonym, content))
+        try:
+            content = headline["content"] + " " + headline["description"] + " " + headline["title"]
+            
+            for key in keywords:
+                for synonym in keywords[key]:
+                    counts[key] += len(re.findall(synonym, content))
+        except:
+            pass
     sumVal = sum(counts.values())
     for key in counts:
         counts[key] *= 100 / sumVal

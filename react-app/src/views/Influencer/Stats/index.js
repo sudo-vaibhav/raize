@@ -15,7 +15,7 @@ import getSocialsData from './getSocialsData'
 
 const Stats = () => {
   let { campaignId } = useParams()
-  // {campa}
+
   const history = useHistory()
 
   let [
@@ -124,7 +124,7 @@ const Stats = () => {
           </div>
           <Card>
             <h3 className="text-xl font-bold">
-              ₹{baseLine}
+              ₹{total}
               <span className="text-sm text-light-900">&nbsp;generated</span>
             </h3>
             <div

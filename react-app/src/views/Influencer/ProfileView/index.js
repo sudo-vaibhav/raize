@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import prajakta from './prajakta.png'
+// import prajakta from './prajakta.png'
 import FeatherIcon from 'feather-icons-react'
 // import donateForIndia from './donate-for-india.png'
 import { Link } from 'react-router-dom'
@@ -79,7 +79,15 @@ const ProfileView = () => {
         <h2 className="font-bold text-2xl pb-2 pt-5">Profile</h2>
         <div className="flex items-center my-5">
           <div>
-            <img src={prajakta} width={84} height={84} alt="profile" />
+            <img
+              src={profileData.profileImage}
+              style={{
+                width: 84,
+                height: 84,
+                borderRadius: '50%',
+              }}
+              alt="profile"
+            />
           </div>
           <div className="ml-3">
             <h3 className="font-semibold text-xl">{profileData.name}</h3>

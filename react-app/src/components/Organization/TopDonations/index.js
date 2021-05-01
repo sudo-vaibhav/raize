@@ -7,7 +7,9 @@ const TopDonor = ({ data, position, showButton, onInflucencerSelect }) => {
     <Card
       key={position}
       className="my-4 border-light-900 border"
-      onClick={onInflucencerSelect}
+      onClick={() => {
+        onInflucencerSelect(data)
+      }}
     >
       <div className="flex justify-between items-center">
         <div className="flex">

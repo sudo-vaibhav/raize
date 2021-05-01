@@ -1,4 +1,7 @@
 import heartOfGold from './heartOfGold.png'
+import rajwada from './rajwada.png'
+import kidDrawing from './kidDrawing.png'
+import { db } from '../../../../firebase'
 import Card from '../../../../components/Card'
 import FeatherIcon from 'feather-icons-react'
 import TopDonations from '../../../../components/Organization/TopDonations'
@@ -8,6 +11,25 @@ import { Player } from '@lottiefiles/react-lottie-player'
 import giftAnimation from '../../../../lotte/gift.json'
 
 Modal.setAppElement('#root')
+
+const NFTData = [
+  {
+    asset: heartOfGold,
+    name: 'Heart of Gold NFT',
+    description: 'Proof that the bearer of this NFT has a heart of gold',
+  },
+  {
+    asset: rajwada,
+    name: 'Barmeri NFT',
+    description:
+      'Claim a rare Barmeri saree next time you visit widow ashram in Jaipur',
+  },
+  {
+    asset: kidDrawing,
+    name: 'Lake Scenery NFT',
+    description: 'Drawn by the bright kids of North Star Orphanage in Delhi',
+  },
+]
 
 const customStyles = {
   content: {
@@ -40,8 +62,8 @@ const GiftNFTs = ({ influencers, donations, campaigns, ngoData }) => {
       }}
     >
       <p className="py-5 text-primary-900 font-semibold">
-        These tokens are limted and therefore should be given out with due
-        consideration
+        These tokens are limted and therefore would need to be approved by app
+        admins before transfer
       </p>
       <div className=" grid gap-4 grid-cols-7">
         <div className="col-span-5">
@@ -51,21 +73,22 @@ const GiftNFTs = ({ influencers, donations, campaigns, ngoData }) => {
               gridTemplateColumns: ' repeat(auto-fit, minmax(200px, 1fr))',
             }}
           >
-            {[1, 2, 3, 4].map((i) => {
+            {NFTData.map((i) => {
               return (
-                <Card key={i}>
-                  <img src={heartOfGold} className="w-full" alt="nft" />
-                  <h6>Heart of Gold</h6>
-                  <div className="flex justify-between text-sm">
+                <Card key={i.name}>
+                  <img src={i.asset} className="w-full" alt="nft" />
+                  <h6 className="my-2 text-lg font-semibold">{i.name}</h6>
+                  <p className="text-sm">{i.description}</p>
+                  {/* <div className="flex justify-between text-sm">
                     <span className="text-primary-900">#68220</span>
                     <span className="font-semibold">2 remaining</span>
-                  </div>
+                  </div> */}
                   <button
-                    onClick={openModal}
+                    // onClick={setSelectedNFT(i.name)}
                     className="text-secondary-900 bg-secondary-500 flex p-3 w-full justify-center mt-4 rounded-lg"
                   >
                     <FeatherIcon icon="gift" />
-                    <span className="pl-3">Gift Now</span>
+                    <span className="pl-3">Gift to Influencer</span>
                   </button>
                 </Card>
               )
@@ -99,7 +122,7 @@ const GiftNFTs = ({ influencers, donations, campaigns, ngoData }) => {
               style={{ height: '200px', width: '300px', marginTop: '2rem' }}
             />
             <h2 className="font-semibold text-primary-900  text-center text-xl">
-              Donation Successful
+              Gift Request Successful
             </h2>
           </div>
         ) : (
@@ -111,7 +134,12 @@ const GiftNFTs = ({ influencers, donations, campaigns, ngoData }) => {
               boxShadow: 'none',
             }}
             {...{ influencers, donations, campaigns }}
-            onInflucencerSelect={() => {
+            onInflucencerSelect={async (data) => {
+              console.log('on influencer select', data)
+              await db.collection('nftrequest').add({
+                influencerUId: data.influencerUId,
+                // nft: selectedNFT,
+              })
               setDonationSuccess(true)
             }}
           />
