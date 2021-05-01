@@ -17,7 +17,7 @@ const Stats = () => {
   let { campaignId } = useParams()
   console.log('campaign id:', campaignId)
   const history = useHistory()
-  const [selectedDropDown, setSelectedDropDown] = useState('select campaign')
+  // const [selectedDropDown, setSelectedDropDown] = useState('select campaign')
 
   let [
     { campaignsData, selectedCampaign, donations, selectedCampaignData },
@@ -68,9 +68,9 @@ const Stats = () => {
             })
           })
       })
-  }, [campaignId])
+  }, [campaignId, currentUser.uid])
 
-  const { total, platformWise, baseLine } = getSocialsData(
+  const { platformWise, baseLine } = getSocialsData(
     campaignsData,
     selectedCampaign,
     donations,

@@ -6,7 +6,7 @@ import Card from '../../../components/Card'
 import { useParams } from 'react-router'
 import { db } from '../../../firebase'
 import FormField from '../../../components/FormField'
-import { useHistory, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Player } from '@lottiefiles/react-lottie-player'
 import paymentDone from '../../../lotte/payment-done.json'
 
@@ -69,7 +69,7 @@ const Donate = () => {
       .catch((error) => {
         console.log('Error getting documents: ', error)
       })
-  }, [donationCode])
+  }, [donationCode, campaignId])
 
   console.log('campaign data:', campaignData, 'organization', organizationData)
   return (
@@ -88,7 +88,11 @@ const Donate = () => {
         <div className="">
           <Card>
             <div className="text-xl font-semibold mb-3">
-              <img src={campaignData.bannerUrl} className="rounded-lg w-full" />
+              <img
+                src={campaignData.bannerUrl}
+                className="rounded-lg w-full"
+                alt="banner"
+              />
             </div>
             <h3 className="font-semibold text-2xl my-3">{campaignData.name}</h3>
             <p className="my-3">{campaignData.description}</p>
@@ -96,8 +100,8 @@ const Donate = () => {
               EIN: 14-1942074
               <br />
               <a
-                href={organizationData.website}
-                target="_blank"
+                href={organizationData}
+                rel="noreferrer"
                 className="text-primary-900 underline flex w-full justify-between my-4"
               >
                 <div className="flex-grow-1">{organizationData.website}</div>

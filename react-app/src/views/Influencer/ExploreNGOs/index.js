@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Card from '../../../components/Card'
-// import ngoImage from './ngo-card.png'
 import { db } from '../../../firebase'
 
 const NGOCard = ({ data }) => {
@@ -53,19 +52,16 @@ const Explore = () => {
         const docs = []
         querySnapshot.forEach((doc) => {
           // doc.data() is never undefined for query doc snapshots
-          {
-            docs.push({ id: doc.id, ...doc.data() })
-          }
+
+          docs.push({ id: doc.id, ...doc.data() })
         })
 
         setNgos(docs)
       })
   }, [])
 
-  console.log(ngos)
-
   return (
-    <div className="mx-auto  container pb-20">
+    <div className="mx-auto container pb-20">
       <div className="px-5 ">
         <h2 className="font-bold text-2xl pb-2 pt-5">NGOs that Need You</h2>
         {ngos.map((e, i) => {

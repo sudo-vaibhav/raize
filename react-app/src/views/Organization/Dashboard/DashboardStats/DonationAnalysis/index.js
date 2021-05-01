@@ -25,42 +25,64 @@ const DonationAnalysis = ({ donationData, className }) => {
     // },
   }
 
-  const LineChart = ({ data, className }) => (
-    <Card className={className}>
-      <h2 className="text-lg font-medium">Donation Analysis</h2>
-      <Line
-        data={(canvas) => {
-          // const height = height
+  const LineChart = ({ data, className }) => {
+    const donations = data.donations
+    const dateWise = {}
 
-          const gradient = canvas
-            .getContext('2d')
-            .createLinearGradient(0, 0, 0, 400)
-          gradient.addColorStop(0, '#00AE91')
-          gradient.addColorStop(1, 'rgba(250,255,255,0)')
+    donations
+      .sort((a, b) => {
+        if (a.doneAt > b.doneAt) return 1
+        else if (a.doneAt < b.doneAt) return -1
+        else return 0
+      })
+      .forEach((donation) => {
+        const doneAt = donation.doneAt
+        const dateObj = new Date(doneAt)
+        const dateString = dateObj.toLocaleDateString()
+        if (dateWise[dateString]) dateWise[dateString] += donation.amount
+        else dateWise[dateString] = donation.amount
+      })
 
-          return {
-            labels: data.dates,
+    console.log(dateWise)
 
-            datasets: [
-              {
-                label: 'Donations Received',
-                data: data.amounts,
-                lineTension: 0.3,
-                borderWidth: 4,
-                fill: 'start',
-                // legend: {
-                //   display: false,
-                // },
-                borderColor: '#00AE91',
-                backgroundColor: gradient,
-              },
-            ],
-          }
-        }}
-        options={options}
-      />
-    </Card>
-  )
+    return (
+      <Card className={className}>
+        <h2 className="text-lg font-medium">Donation Analysis</h2>
+
+        <Line
+          data={(canvas) => {
+            // const height = height
+
+            const gradient = canvas
+              .getContext('2d')
+              .createLinearGradient(0, 0, 0, 400)
+            gradient.addColorStop(0, '#00AE91')
+            gradient.addColorStop(1, 'rgba(250,255,255,0)')
+
+            return {
+              labels: Object.keys(dateWise),
+
+              datasets: [
+                {
+                  label: 'Donations Received',
+                  data: Object.values(dateWise),
+                  lineTension: 0.3,
+                  borderWidth: 4,
+                  fill: 'start',
+                  // legend: {
+                  //   display: false,
+                  // },
+                  borderColor: '#00AE91',
+                  backgroundColor: gradient,
+                },
+              ],
+            }
+          }}
+          options={options}
+        />
+      </Card>
+    )
+  }
   return <LineChart data={donationData} className={className} />
 }
 

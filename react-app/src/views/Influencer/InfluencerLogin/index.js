@@ -1,14 +1,25 @@
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { Form, Formik } from 'formik'
 import FormField from '../../../components/FormField'
+import { useAuth } from '../../../contexts/AuthContext'
 
 const InfluencerLogin = () => {
+  const { signin } = useAuth()
+  const history = useHistory()
   return (
     <div className="container mx-auto">
       <Formik
         initialValues={{
           email: 'mailvaibhavchopra@gmail.com',
-          password: '',
+          password: '123456',
+        }}
+        onSubmit={async (values) => {
+          try {
+            await signin(values.email, values.password)
+            history.push('/influencer/profile')
+          } catch (e) {
+            alert('error while signing in')
+          }
         }}
       >
         {({ isSubmitting }) => (

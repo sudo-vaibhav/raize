@@ -15,19 +15,21 @@ const Notifications = () => {
               </div>
               <div className="ml-4 flex-grow">
                 <h6 className="font-medium text-light-900">NFT GIFT</h6>
-                <p>
-                  You just recieved a Gift from{' '}
-                  <span className="font-semibold">Hemkunt NGO</span>
-                  <div className="text-primary-900 font-medium">
-                    Click here to check it out
+                <div>
+                  <div>
+                    You just recieved a Gift from{' '}
+                    <span className="font-semibold">Hemkunt NGO</span>
                   </div>
-                </p>
+                  <Link className="text-primary-900 font-medium">
+                    Click here to check it out
+                  </Link>
+                </div>
               </div>
             </Card>
           )
         })}
         <h6 className="font-semibold text-light-900 text-center w-3/4 mx-auto">
-          There are still countless people who can use your help.{' '}
+          <div>There are still countless people who can use your help.</div>
           <Link to={'/influencer/new-campaign'} className="text-primary-900">
             Start a fundraiser
           </Link>

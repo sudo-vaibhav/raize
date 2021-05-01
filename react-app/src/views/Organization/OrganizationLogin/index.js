@@ -1,8 +1,11 @@
 import { Form, Formik } from 'formik'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import FormField from '../../../components/FormField'
 import Card from '../../../components/Card'
+import { useAuth } from '../../../contexts/AuthContext'
 const OrganizationLogin = () => {
+  const { signin } = useAuth()
+  const history = useHistory()
   return (
     <div
       className="bg-dark-700 grid place-items-center"
@@ -24,8 +27,16 @@ const OrganizationLogin = () => {
         <div className="col-start-3 py-16 col-span-1">
           <Formik
             initialValues={{
-              email: 'mailvaibhavchopra@gmail.com',
-              password: '',
+              email: 'contact@hemkuntfoundation.com',
+              password: '123456',
+            }}
+            onSubmit={async (values) => {
+              try {
+                await signin(values.email, values.password)
+                history.push('/organization')
+              } catch (err) {
+                alert('error while signing in, check your credentials')
+              }
             }}
           >
             {({ isSubmitting }) => (
