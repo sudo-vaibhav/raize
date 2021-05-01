@@ -28,7 +28,7 @@ const DashboardStats = () => {
             organizationDoc = { id: doc.id, ...doc.data() }
           })
 
-          console.log(organizationDoc)
+          // console.log(organizationDoc)
           db.collection('campaign')
             .where('orgUId', '==', organizationDoc.id)
             .get()
@@ -41,7 +41,7 @@ const DashboardStats = () => {
                 })
               })
 
-              console.log('my campaigns', orgCampaigns)
+              // console.log('my campaigns', orgCampaigns)
 
               db.collection('donation')
                 .where(
@@ -70,7 +70,7 @@ const DashboardStats = () => {
                         })
                       })
 
-                      console.log('influceners', influencers)
+                      // console.log('influceners', influencers)
 
                       setData({
                         influencers,
@@ -80,7 +80,7 @@ const DashboardStats = () => {
                       })
                     })
 
-                  console.log('my donations', orgDonations)
+                  // console.log('my donations', orgDonations)
                 })
             })
         })
@@ -105,6 +105,8 @@ const DashboardStats = () => {
         <TopDonations
           className="row-span-2 col-start-6 col-span-2"
           influencers={influencers}
+          donations={donations}
+          campaigns={campaigns}
         />
         <SocialsSplit
           className="row-start-2 col-span-3 pb-10"

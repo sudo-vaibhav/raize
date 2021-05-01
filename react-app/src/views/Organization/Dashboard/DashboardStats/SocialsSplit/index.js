@@ -5,7 +5,7 @@ import { platformColorMap } from '../../../../../constants'
 const platforms = ['youtube', 'twitter', 'instagram']
 // const data =
 const DoughnutChart = ({ donations }) => {
-  console.log(donations)
+  // console.log(donations)
   const platformWise = {
     youtube: 0,
     twitter: 0,
@@ -16,7 +16,7 @@ const DoughnutChart = ({ donations }) => {
     platformWise[donation.platform] += donation.amount
   })
 
-  console.log(platformWise)
+  // console.log(platformWise)
   return (
     <>
       <Doughnut

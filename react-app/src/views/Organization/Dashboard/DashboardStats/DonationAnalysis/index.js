@@ -43,7 +43,7 @@ const DonationAnalysis = ({ donationData, className }) => {
         else dateWise[dateString] = donation.amount
       })
 
-    console.log(dateWise)
+    // console.log(dateWise)
 
     return (
       <Card className={className}>

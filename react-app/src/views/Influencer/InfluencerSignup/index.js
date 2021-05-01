@@ -18,6 +18,7 @@ const InfluencerSignup = () => {
           instagram: 'mostlysane',
           youtube: 'MostlySane',
           twitter: 'iamMostlySane',
+          profileImage: 'https://i.ibb.co/KFJLg3t/prajakta.png',
           raribleAddress: '0x50474e65ba0fc6a55e561907b0145561ed89c52a',
           influencerId: getUniqueId(),
         }}
@@ -48,6 +49,7 @@ const InfluencerSignup = () => {
               <FormField fieldName={'name'} />
               <FormField fieldName={'email'} />
               <FormField fieldName={'raribleAddress'} />
+              <FormField fieldName={'profileImage'} />
               <FormField fieldName={'password'} />
               <FormField fieldName={'instagram'} />
               <FormField fieldName={'youtube'} />
