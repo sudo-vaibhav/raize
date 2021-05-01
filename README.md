@@ -1,6 +1,8 @@
 # **Raize**
 
-<img src="https://i.ibb.co/XYB283J/Header.png" alt="Header">
+<img src="https://i.ibb.co/h1PkNv8/Cover.png" alt="Cover">
+
+
 Table of Contents
 
 - About the Product
@@ -18,6 +20,8 @@ Table of Contents
 **About the Product**
 
 <a href="https://ibb.co/tLfmXxC"><img src="https://i.ibb.co/XYB283J/Header.png" alt="Header" border="0"></a>
+
+
 
 **Built with**
 <a href="https://ibb.co/d23kTzR"><img src="https://i.ibb.co/58zs0fP/Header.png" alt="Header" border="0"></a>
@@ -77,6 +81,7 @@ We got this idea while we were exploring the Rarible Protocol. We also aim to pr
 <a href="https://ibb.co/16CgHkF"><img src="https://i.ibb.co/sHTfLZ8/Frame-20854.png" alt="Frame-20854" border="0"></a>
 
 **Business Model**
+
 <a href="https://ibb.co/XFb3mfJ"><img src="https://i.ibb.co/5s6nqXc/Instagram-post-1.png" alt="Instagram-post-1" border="0"></a>
 
 **Promo Video"
