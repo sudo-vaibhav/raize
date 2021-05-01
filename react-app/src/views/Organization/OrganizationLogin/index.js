@@ -54,9 +54,9 @@ const OrganizationLogin = () => {
                     inputClassName="border border-light-900"
                   />
 
-                  <Link className="w-full font-semibold text-right block my-2">
+                  {/* <Link className="w-full font-semibold text-right block my-2">
                     Forgot password?
-                  </Link>
+                  </Link> */}
                   <button
                     className="btn-primary-900 light rounded-lg my-4"
                     type="submit"

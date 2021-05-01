@@ -20,7 +20,7 @@ const customStyles = {
   },
 }
 
-const GiftNFTs = () => {
+const GiftNFTs = ({ influencers, donations, campaigns, ngoData }) => {
   const [donationSuccess, setDonationSuccess] = useState(false)
   const [modalIsOpen, setIsOpen] = useState(false)
 
@@ -51,9 +51,9 @@ const GiftNFTs = () => {
               gridTemplateColumns: ' repeat(auto-fit, minmax(200px, 1fr))',
             }}
           >
-            {[1, 2, 3, 4].map(() => {
+            {[1, 2, 3, 4].map((i) => {
               return (
-                <Card>
+                <Card key={i}>
                   <img src={heartOfGold} className="w-full" alt="nft" />
                   <h6>Heart of Gold</h6>
                   <div className="flex justify-between text-sm">
@@ -72,7 +72,11 @@ const GiftNFTs = () => {
             })}
           </div>
         </div>
-        <TopDonations showButton={false} className="col-start-6 col-span-2" />
+        <TopDonations
+          {...{ influencers, donations, campaigns }}
+          showButton={false}
+          className="col-start-6 col-span-2"
+        />
       </div>
       <Modal
         isOpen={modalIsOpen}
@@ -106,6 +110,7 @@ const GiftNFTs = () => {
               width: '50vw',
               boxShadow: 'none',
             }}
+            {...{ influencers, donations, campaigns }}
             onInflucencerSelect={() => {
               setDonationSuccess(true)
             }}

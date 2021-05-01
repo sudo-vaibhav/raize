@@ -10,7 +10,7 @@ const InfluencerLogin = () => {
     <div className="container mx-auto">
       <Formik
         initialValues={{
-          email: 'mailvaibhavchopra@gmail.com',
+          email: 'prajakta@gmail.com',
           password: '123456',
         }}
         onSubmit={async (values) => {
@@ -28,9 +28,9 @@ const InfluencerLogin = () => {
               <h2 className="font-bold text-2xl pb-2 pt-5">Login</h2>
               <FormField fieldName={'email'} />
               <FormField fieldName={'password'} />
-              <Link className="w-full font-semibold text-right block my-2">
+              {/* <Link className="w-full font-semibold text-right block my-2">
                 Forgot password?
-              </Link>
+              </Link> */}
             </div>
             <div className="fixed w-full left-0  p-5 bottom-0 flex flex-col items-stretch">
               <button

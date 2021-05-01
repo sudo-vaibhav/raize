@@ -1,4 +1,4 @@
-import { Switch, Route, useRouteMatch } from 'react-router-dom'
+import { Switch, Route, useRouteMatch, Redirect } from 'react-router-dom'
 import BottomNavigator from './BottomNavigator'
 import ProfileView from './ProfileView'
 import InfluencerLogin from './InfluencerLogin'
@@ -7,34 +7,67 @@ import Stats from './Stats'
 import Notifications from './Notifications'
 import ExploreNGOs from './ExploreNGOs'
 import StartCampaign from './StartCampaign'
+import { useAuth } from '../../contexts/AuthContext'
 
 const Influencer = () => {
   const { path } = useRouteMatch()
+  const { currentUser } = useAuth()
   return (
     <div className="bg-light-500 min-h-screen">
       <Switch>
         <Route path={`${path}/login`} exact>
-          <InfluencerLogin />
+          {currentUser ? (
+            <Redirect to={'/influencer/profile'} />
+          ) : (
+            <InfluencerLogin />
+          )}
         </Route>
         <Route path={`${path}/signup`} exact>
-          <InfluencerSignup />
+          {currentUser ? (
+            <Redirect to={'/influencer/profile'} />
+          ) : (
+            <InfluencerSignup />
+          )}
         </Route>
         <Route>
           <Switch>
             <Route path={`${path}/stats/:campaignId?`}>
-              <Stats />
+              {currentUser ? <Stats /> : <Redirect to={'/influencer/login'} />}
             </Route>
             <Route path={`${path}/profile`}>
-              <ProfileView />
+              {currentUser ? (
+                <ProfileView />
+              ) : (
+                <Redirect to={'/influencer/login'} />
+              )}
             </Route>
             <Route path={`${path}/notifications`}>
-              <Notifications />
+              {currentUser ? (
+                <Notifications />
+              ) : (
+                <Redirect to={'/influencer/login'} />
+              )}
             </Route>
             <Route path={`${path}/explore-ngos`}>
-              <ExploreNGOs />
+              {currentUser ? (
+                <ExploreNGOs />
+              ) : (
+                <Redirect to={'/influencer/login'} />
+              )}
             </Route>
             <Route path={`${path}/start-campaign/:ngoId`}>
-              <StartCampaign />
+              {currentUser ? (
+                <StartCampaign />
+              ) : (
+                <Redirect to={'/influencer/login'} />
+              )}
+            </Route>
+            <Route exact>
+              {currentUser ? (
+                <Redirect to={`${path}/profile`} />
+              ) : (
+                <Redirect to={`${path}/login`} />
+              )}
             </Route>
           </Switch>
           <BottomNavigator />

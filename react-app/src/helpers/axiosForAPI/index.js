@@ -7,7 +7,10 @@ import axios from 'axios'
 
 const instance = axios.create({
   // adapter: cache.adapter, // we are using this cache adapter to improve performance
-  baseURL: 'http://127.0.0.1:5000/',
+  baseURL:
+    process.env['NODE_ENV'] === 'dev'
+      ? 'http://127.0.0.1:5000/'
+      : 'https://raize-api.azurewebsites.net/',
 })
 
 instance.interceptors.response.use(

@@ -15,9 +15,8 @@ import getSocialsData from './getSocialsData'
 
 const Stats = () => {
   let { campaignId } = useParams()
-  console.log('campaign id:', campaignId)
+  // {campa}
   const history = useHistory()
-  // const [selectedDropDown, setSelectedDropDown] = useState('select campaign')
 
   let [
     { campaignsData, selectedCampaign, donations, selectedCampaignData },
@@ -28,9 +27,6 @@ const Stats = () => {
     donations: [],
   })
   const { currentUser } = useAuth()
-
-  // const selectedCampaign = campaignId || (campaignsData && campaignsData[0].id)
-  // let selectedCampaign = campaignId
 
   useEffect(() => {
     console.log(currentUser.uid)
@@ -70,8 +66,8 @@ const Stats = () => {
       })
   }, [campaignId, currentUser.uid])
 
-  const { platformWise, baseLine } = getSocialsData(
-    campaignsData,
+  const { platformWise, baseLine, total } = getSocialsData(
+    campaignsData || [],
     selectedCampaign,
     donations,
   )
@@ -164,6 +160,7 @@ const Stats = () => {
                 key={idx}
                 name={e}
                 amount={platformWise[e]}
+                total={total}
                 selectedCampaignData={selectedCampaignData}
               />
             )

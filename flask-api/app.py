@@ -4,8 +4,10 @@ import pandas as pd
 # import tensorflow as tf
 from flask import Flask, request,jsonify
 from flask_cors import CORS
+from sentiment_split import sentiment_split
 
 import state_ut_wise
+
 
 df = pd.read_csv("./data.csv")
 df["High"]*=1000
@@ -15,6 +17,10 @@ app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
+
+@app.route('/sentiment_split', methods=['GET'])
+def split():
+    return jsonify(sentiment_split())
 
 @app.route('/covid_cases_statewise', methods=['GET'])
 def covid_cases_statewise():

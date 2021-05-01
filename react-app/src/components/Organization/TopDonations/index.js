@@ -1,7 +1,7 @@
 import Card from '../../Card'
 import FeatherIcon from 'feather-icons-react'
 import { Link } from 'react-router-dom'
-import prajakta from '../../../views/Influencer/ProfileView/prajakta.png'
+// import prajakta from '../../../views/Influencer/ProfileView/prajakta.png'
 const TopDonor = ({ data, position, showButton, onInflucencerSelect }) => {
   return (
     <Card
@@ -53,16 +53,16 @@ const TopDonations = ({
     influencerAmounts[influencer.influencerUId] = 0
   })
 
-  console.log('influencers amounts', influencerAmounts)
+  // console.log('influencers amounts', influencerAmounts)
 
   donations.forEach((donation) => {
     const sourceInfluencerId = campaigns.find(
       (e) => e.id === donation.campaignId,
     ).influencerId
-    console.log('influencer id while iterating donation', sourceInfluencerId)
-    console.log('donation amount', donation.amount, typeof donation.amount)
+    // console.log('influencer id while iterating donation', sourceInfluencerId)
+    // console.log('donation amount', donation.amount, typeof donation.amount)
     influencerAmounts[sourceInfluencerId] += donation.amount
-    console.log('revised values of amounts', influencerAmounts)
+    // console.log('revised values of amounts', influencerAmounts)
   })
 
   influencers = influencers.map((e) => ({
@@ -82,7 +82,7 @@ const TopDonations = ({
 
   influencers = influencers.filter((e) => e.amount != 0).slice(0, 5)
 
-  console.log(influencers)
+  // console.log(influencers)
 
   return (
     <Card className={` ${className} overflow-y-auto`} style={style}>
@@ -92,6 +92,7 @@ const TopDonations = ({
           <TopDonor
             position={i + 1}
             data={e}
+            key={i}
             showButton={showButton}
             onInflucencerSelect={onInflucencerSelect}
           />

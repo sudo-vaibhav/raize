@@ -3,3 +3,6 @@ Flask
 tensorflow
 pandas
 flask-cors
+newsapi-python
+spacy
+nltk
