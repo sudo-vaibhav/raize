@@ -58,6 +58,7 @@ Most small NGOs without a dedicated modern bookkeeping/accountant take donations
 - By analysing news and other sources, the platform can also **suggest resource allocation** to different causes for the NGO. For Example, by analysing the distress news coming from different news portals regarding vaccines, bed availability, oxygen cylinder supply, it can help organisations better decide which issue they should focus more on and allocate more funds to. This will allow organisations to base their decisions on real data and well informed analysis rather than relying on guesswork and chance.
 - We can also plan to utilise incoming news reports and statistics to identify high priority regions compared to lower priority regions.
 - ... and much more. AI can bring the power of accountancy and foresight in the hands of small organizations that were previously restricted to only big NGOs like WHO and United Nations who **can afford to pay salaries** to top data scientists and accountants while smaller bodies struggle to keep the lights on and keep a roof over their head.
+<br>
   <a href="https://ibb.co/3M43Mhr"><img src="https://i.ibb.co/txQGxCm/Frame-1990.png" alt="Frame-1990" border="0"></a>
   <a href="https://ibb.co/544B84N"><img src="https://i.ibb.co/H44nz4W/Frame-1992.png" alt="Frame-1992" border="0"></a>
   <a href="https://ibb.co/6RsYTpm"><img src="https://i.ibb.co/yns0ZMX/Frame-1991.png" alt="Frame-1991" border="0"></a>
