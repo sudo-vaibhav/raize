@@ -24,14 +24,14 @@ const featuresData = [
 
 const Features = () => {
   return (
-    <section className="container mx-auto text-center my-10">
+    <section className="container mx-auto text-center my-10 px-5">
       <h2 className="text-light-100 text-3xl">
         Cybernetically Enhanced Fundraisers
       </h2>
       <p className="lg:w-1/2 mx-auto text-light-900 my-3">
         A Digital Sidekick for the Real Superheroes
       </p>
-      <div className="grid grid-rows-3 gap-3 grid-cols-1 lg:grid-rows-1 lg:grid-cols-3  lg:w-3/4 mx-auto my-10">
+      <div className="grid grid-rows-3 gap-3 grid-cols-1 lg:grid-rows-1 lg:grid-cols-3  lg:w-3/4 lg:mx-auto my-10">
         {featuresData.map((e) => {
           return (
             <div
