@@ -1,3 +1,5 @@
+const dotenv = require('dotenv')
+dotenv.config()
 const bodyParser = require('body-parser')
 const crypto = require('crypto')
 const shortid = require('shortid')
@@ -9,8 +11,8 @@ app.use(cors())
 const Razorpay = require('razorpay')
 
 const instance = new Razorpay({
-  key_id: 'rzp_test_JxTRhuWo22IDA4',
-  key_secret: 'i6ZSjDuTUjOLiEScqafNsygq',
+  key_id: process.env.RAZOR_KEY,
+  key_secret: process.env.RAZOR_SECRET,
 })
 
 app.get('/', (req, res) => {
@@ -34,7 +36,7 @@ app.post('/success', (req, res) => {
     // Creating our own digest
     // The format should be like this:
     // digest = hmac_sha256(orderCreationId + "|" + razorpayPaymentId, secret);
-    const shasum = crypto.createHmac('sha256', 'i6ZSjDuTUjOLiEScqafNsygq')
+    const shasum = crypto.createHmac('sha256', process.env.RAZOR_SECRET)
 
     shasum.update(`${orderCreationId}|${razorpayPaymentId}`)
 

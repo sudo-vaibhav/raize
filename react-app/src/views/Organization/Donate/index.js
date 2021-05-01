@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom'
 import { Player } from '@lottiefiles/react-lottie-player'
 import paymentDone from '../../../lotte/payment-done.json'
 import axios from 'axios'
+import { razorPayUrl } from '../../../constants'
 
 function loadScript(src) {
   return new Promise((resolve) => {
@@ -35,13 +36,8 @@ const Donate = () => {
       return
     }
 
-    // name: 'Vaibhav Chopra',
-    // email: 'mailvaibhavchopra@gmail.com',
-    // phone: '9319740960',
-    // amount: 500,
-
     // creating a new order
-    const result = await axios.post('http://localhost:8989/orders', {
+    const result = await axios.post(`${razorPayUrl}/orders`, {
       amount: values.amount,
     })
 
@@ -52,7 +48,7 @@ const Donate = () => {
 
     // Getting the order details back
     const { amount, id: order_id, currency } = result.data
-
+    console.log('amount thihng', amount)
     const options = {
       key: 'rzp_test_JxTRhuWo22IDA4', // Enter the Key ID generated from the Dashboard
       amount: amount.toString(),
@@ -69,8 +65,11 @@ const Donate = () => {
           razorpaySignature: response.razorpay_signature,
         }
 
-        const result = await axios.post('http://localhost:8989/success', data)
+        const result = await axios.post(`${razorPayUrl}/success`, data)
 
+        if (result.data.msg !== 'success') {
+          throw new Error('not successful')
+        }
         // alert(result.data.msg)
 
         // setIsOpen(true)
@@ -152,7 +151,7 @@ const Donate = () => {
       })
   }, [donationCode, campaignId])
 
-  console.log('campaign data:', campaignData, 'organization', organizationData)
+  // console.log('campaign data:', campaignData, 'organization', organizationData)
   return (
     <div className="bg-light-500 px-4">
       <div className="text-2xl mx-auto container items-center flex font-semibold py-8">
@@ -192,7 +191,7 @@ const Donate = () => {
           </Card>
           <Card className="mt-10">
             <h5 className="text-xl font-semibold mt-3 mb-7">
-              100% will go to the charity
+              99% will go to the charity
             </h5>
             {[
               {
@@ -244,20 +243,24 @@ const Donate = () => {
                 amount: 500,
               }}
               onSubmit={async (values) => {
-                await displayRazorpay(values)
-                await db.collection('donation').add({
-                  ...values,
-                  campaignId: campaignData.id,
-                  platform: {
-                    yt: 'youtube',
-                    ig: 'instagram',
-                    tw: 'twitter',
-                  }[platformCode],
-                  doneAt: Date.now(),
-                  amount: parseFloat(values.amount),
-                })
+                try {
+                  await displayRazorpay(values)
+                  await db.collection('donation').add({
+                    ...values,
+                    campaignId: campaignData.id,
+                    platform: {
+                      yt: 'youtube',
+                      ig: 'instagram',
+                      tw: 'twitter',
+                    }[platformCode],
+                    doneAt: Date.now(),
+                    amount: parseFloat(values.amount),
+                  })
 
-                setIsOpen(true)
+                  setIsOpen(true)
+                } catch (err) {
+                  alert('payment failed')
+                }
               }}
             >
               {({ isSubmitting, values, setValues }) => (
