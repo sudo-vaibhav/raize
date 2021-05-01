@@ -1,6 +1,6 @@
 # **Raize**
 
-<img src="./Frame%201990.png" />
+<img src="./Frame 1990.png" />
 Table of Contents
 
 - About the Product
